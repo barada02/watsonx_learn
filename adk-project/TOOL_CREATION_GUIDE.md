@@ -291,9 +291,13 @@ orchestrate tools import --kind python --file contact_tools.py
    orchestrate agents import --file adk-project/agents/contact_manager_agent.yaml
    ```
 
-4. **Test in chat**:
+4. **Test in chat** (choose one):
    ```bash
-   orchestrate chat
+   # Web-based UI
+   orchestrate chat start
+   
+   # Or CLI interactive chat
+   orchestrate chat ask --agent personal_contact_manager
    ```
 
 ## Files in This Project

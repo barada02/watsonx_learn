@@ -123,8 +123,12 @@ orchestrate agents import --file adk-project/agents/contact_manager_agent.yaml
 # 8. Verify agent
 orchestrate agents list
 
-# 9. Test the agent
-orchestrate chat
+# 9. Test the agent (choose one)
+# Option A: Start web-based chat UI
+orchestrate chat start
+
+# Option B: Interactive CLI chat with an agent
+orchestrate chat ask --agent personal_contact_manager
 ```
 
 ## Troubleshooting

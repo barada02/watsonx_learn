@@ -63,14 +63,21 @@ orchestrate agents list
 
 ## Step 5: Test the Agent
 
-You can test the agent using the chat interface:
+You can test the agent using one of these methods:
 
+**Option A: Web-based Chat UI**
 ```bash
-orchestrate chat
+orchestrate chat start
 ```
+This will start a web interface where you can interact with your agent.
 
-Or deploy the agent:
+**Option B: CLI Interactive Chat**
+```bash
+orchestrate chat ask --agent-name personal_contact_manager
+```
+This starts an interactive command-line chat session.
 
+**Option C: Deploy the Agent**
 ```bash
 orchestrate agents deploy --name personal_contact_manager
 ```
