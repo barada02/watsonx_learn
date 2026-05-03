@@ -15,4 +15,4 @@ def multiply(a: int, b: int) -> int:
 
 if __name__ == "__main__":
     # We use SSE transport for a cloud deployment so it can be exposed over HTTP
-    mcp.run(transport='sse', host='0.0.0.0', port=8000)
+    mcp.run(transport='sse', host='0.0.0.0', port=8080)
