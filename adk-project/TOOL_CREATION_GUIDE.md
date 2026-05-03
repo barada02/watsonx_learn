@@ -297,7 +297,7 @@ orchestrate tools import --kind python --file contact_tools.py
    orchestrate chat start
    
    # Or CLI interactive chat
-   orchestrate chat ask --agent personal_contact_manager
+   orchestrate chat ask --agent-name personal_contact_manager
    ```
 
 ## Files in This Project

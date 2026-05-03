@@ -3,6 +3,20 @@
 ## Purpose
 This document provides clear, step-by-step instructions for working with IBM Watson Orchestrate. It is designed to be easily understood by LLMs and developers for future reference.
 
+## 🔍 Exploring Watson Orchestrate
+
+**Always use `--help` to explore commands:**
+```bash
+orchestrate --help                    # Main help
+orchestrate env --help                # Environment commands
+orchestrate tools --help              # Tool commands
+orchestrate agents --help             # Agent commands
+orchestrate chat --help               # Chat commands
+orchestrate tools import --help       # Specific command help
+```
+
+This is the best way to discover available options and understand command syntax.
+
 ---
 
 ## Table of Contents
@@ -93,7 +107,11 @@ def function_name(
 
 **Import Command:**
 ```bash
+# Basic import
 orchestrate tools import --kind python --file path/to/tool.py
+
+# With dependencies (if tool requires external packages)
+orchestrate tools import --kind python --file path/to/tool.py --requirements-file path/to/requirements.txt
 ```
 
 **Key Requirements:**
@@ -102,6 +120,25 @@ orchestrate tools import --kind python --file path/to/tool.py
 3. Write clear docstrings in Google style
 4. Return structured data (Dict/JSON)
 5. Handle errors gracefully
+6. **If tool has dependencies**: Create `requirements.txt` in same directory and use `--requirements-file` flag
+
+**Example with Dependencies:**
+```
+tools/
+├── my_tool.py
+└── requirements.txt
+```
+
+**requirements.txt:**
+```
+requests>=2.28.0
+pandas>=1.5.0
+```
+
+**Import with dependencies:**
+```bash
+orchestrate tools import --kind python --file tools/my_tool.py --requirements-file tools/requirements.txt
+```
 
 ### Method 2: Auto-Discover (Alternative)
 ```bash
@@ -126,6 +163,7 @@ orchestrate tools list
 
 **File: agent_definition.yaml**
 ```yaml
+spec_version: v1
 name: agent_name
 description: Brief description of what the agent does
 kind: native
@@ -162,6 +200,8 @@ tags:
   - tag1
   - tag2
 ```
+
+**IMPORTANT:** The `spec_version: v1` field is **required** at the top of the YAML file.
 
 **Import Command:**
 ```bash
@@ -203,12 +243,14 @@ orchestrate chat stop
 
 ### Option 2: CLI Interactive Chat
 ```bash
-# Start interactive chat with specific agent
-orchestrate chat ask --agent agent_name
+# Start interactive chat with specific agent (CORRECT SYNTAX)
+orchestrate chat ask --agent-name agent_name
 
 # Ask a single question
-orchestrate chat ask --agent agent_name "Your question here"
+orchestrate chat ask --agent-name agent_name "Your question here"
 ```
+
+**Note:** Use `--agent-name` (with hyphen), not `--agent`
 
 ### Option 3: Deploy Agent
 ```bash
@@ -277,9 +319,11 @@ orchestrate server status                               # Check server status
 ```bash
 orchestrate chat start                                  # Start web UI
 orchestrate chat stop                                   # Stop web UI
-orchestrate chat ask --agent <name>                     # Interactive CLI chat
-orchestrate chat ask --agent <name> "question"          # Single question
+orchestrate chat ask --agent-name <name>                # Interactive CLI chat
+orchestrate chat ask --agent-name <name> "question"     # Single question
 ```
+
+**Note:** Use `--agent-name` (not `--agent`) for chat commands
 
 ---
 
@@ -398,6 +442,7 @@ orchestrate tools list  # Verify
 ### 4. Create Agent
 **File: agents/greeter_agent.yaml**
 ```yaml
+spec_version: v1
 name: greeter
 description: A friendly greeting agent
 kind: native
@@ -414,11 +459,13 @@ config:
   enable_cot: true
 ```
 
+**Note:** Always include `spec_version: v1` at the top of agent YAML files.
+
 ### 5. Import and Test Agent
 ```bash
 orchestrate agents import --file agents/greeter_agent.yaml
 orchestrate agents list  # Verify
-orchestrate chat ask --agent greeter "Greet John"
+orchestrate chat ask --agent-name greeter "Greet John"
 ```
 
 ---
@@ -435,7 +482,7 @@ orchestrate chat ask --agent greeter "Greet John"
 | List tools | `orchestrate tools list` |
 | List agents | `orchestrate agents list` |
 | Start chat UI | `orchestrate chat start` |
-| CLI chat | `orchestrate chat ask --agent <name>` |
+| CLI chat | `orchestrate chat ask --agent-name <name>` |
 | Deploy agent | `orchestrate agents deploy --name <name>` |
 
 ---
@@ -446,12 +493,15 @@ orchestrate chat ask --agent greeter "Greet John"
 2. **Type hints are required** for all function parameters
 3. **Docstrings must be Google-style** with Args and Returns sections
 4. **Import command is**: `orchestrate tools import --kind python --file <path>`
-5. **Chat commands have subcommands**: `orchestrate chat start` or `orchestrate chat ask`
-6. **Environment must be activated** before any orchestrate commands
-7. **Two environments**: Python venv (bobenv) AND Watson Orchestrate env
-8. **Return structured data** (Dict/JSON) from all tools
-9. **Agent YAML must list tool names** exactly as they appear in tool list
-10. **Test incrementally**: tool → agent → chat
+5. **Use --requirements-file** if tool has dependencies: `--requirements-file path/to/requirements.txt`
+6. **Agent YAML must have**: `spec_version: v1` at the top
+7. **Chat command syntax**: `orchestrate chat ask --agent-name <name>` (use `--agent-name` not `--agent`)
+8. **Environment must be activated** before any orchestrate commands
+9. **Two environments**: Python venv (bobenv) AND Watson Orchestrate env
+10. **Return structured data** (Dict/JSON) from all tools
+11. **Agent YAML must list tool names** exactly as they appear in tool list
+12. **Test incrementally**: tool → agent → chat
+13. **Use --help** to explore any command: `orchestrate <command> --help`
 
 ---
 

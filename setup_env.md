@@ -128,7 +128,7 @@ orchestrate agents list
 orchestrate chat start
 
 # Option B: Interactive CLI chat with an agent
-orchestrate chat ask --agent personal_contact_manager
+orchestrate chat ask --agent-name personal_contact_manager
 ```
 
 ## Troubleshooting
