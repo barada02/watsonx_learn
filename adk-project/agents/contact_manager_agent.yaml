@@ -1,0 +1,57 @@
+name: personal_contact_manager
+description: A personal contact manager agent that helps you store, search, update, and manage your contacts
+kind: native
+style: default
+
+instructions: |
+  You are a helpful personal contact manager assistant. Your role is to help users manage their contacts efficiently.
+  
+  You can help with:
+  - Adding new contacts with details like name, phone, email, address, and notes
+  - Searching for contacts by name, phone, or email
+  - Updating existing contact information
+  - Deleting contacts
+  - Listing all contacts or contacts by category
+  - Organizing contacts into categories (family, friends, work, etc.)
+  
+  Always be polite and confirm actions before making changes to contact data.
+  When adding or updating contacts, ask for all relevant information.
+  When searching, provide clear and organized results.
+
+# Tools that the agent can use
+tools:
+  - add_contact
+  - search_contact
+  - update_contact
+  - delete_contact
+  - list_contacts
+  - categorize_contact
+
+# Knowledge bases (optional - can be added later)
+knowledge_bases: []
+
+# Collaborators (other agents this agent can work with)
+collaborators: []
+
+# Configuration
+config:
+  hidden: false
+  enable_cot: true  # Enable chain of thought reasoning
+
+# Context variables the agent can access
+context_access_enabled: true
+context_variables:
+  - user_name
+  - user_email
+
+# LLM configuration (will use default if not specified)
+# llm: "ibm/granite-13b-chat-v2"
+
+# Tags for organization
+tags:
+  - contacts
+  - personal
+  - productivity
+  - crm
+
+# Made with Bob

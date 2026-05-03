@@ -1,0 +1,117 @@
+tools:
+  - name: add_contact
+    description: Add a new contact to the contact manager
+    parameters:
+      - name: name
+        type: string
+        description: Full name of the contact
+        required: true
+      - name: phone
+        type: string
+        description: Phone number
+        required: false
+      - name: email
+        type: string
+        description: Email address
+        required: false
+      - name: address
+        type: string
+        description: Physical address
+        required: false
+      - name: category
+        type: string
+        description: Category (family, friends, work, general)
+        required: false
+        default: general
+      - name: notes
+        type: string
+        description: Additional notes about the contact
+        required: false
+    returns:
+      type: object
+      description: Created contact information
+
+  - name: search_contact
+    description: Search for contacts by name, phone, or email
+    parameters:
+      - name: query
+        type: string
+        description: Search term to look for in contact information
+        required: true
+    returns:
+      type: object
+      description: List of matching contacts
+
+  - name: update_contact
+    description: Update an existing contact's information
+    parameters:
+      - name: contact_id
+        type: integer
+        description: ID of the contact to update
+        required: true
+      - name: name
+        type: string
+        description: New name
+        required: false
+      - name: phone
+        type: string
+        description: New phone number
+        required: false
+      - name: email
+        type: string
+        description: New email address
+        required: false
+      - name: address
+        type: string
+        description: New address
+        required: false
+      - name: category
+        type: string
+        description: New category
+        required: false
+      - name: notes
+        type: string
+        description: New notes
+        required: false
+    returns:
+      type: object
+      description: Updated contact information
+
+  - name: delete_contact
+    description: Delete a contact from the contact manager
+    parameters:
+      - name: contact_id
+        type: integer
+        description: ID of the contact to delete
+        required: true
+    returns:
+      type: object
+      description: Deletion status
+
+  - name: list_contacts
+    description: List all contacts or contacts in a specific category
+    parameters:
+      - name: category
+        type: string
+        description: Optional category to filter by (family, friends, work, general)
+        required: false
+    returns:
+      type: object
+      description: List of contacts
+
+  - name: categorize_contact
+    description: Change the category of a contact
+    parameters:
+      - name: contact_id
+        type: integer
+        description: ID of the contact
+        required: true
+      - name: category
+        type: string
+        description: New category (family, friends, work, general)
+        required: true
+    returns:
+      type: object
+      description: Updated contact with new category
+
+# Made with Bob
