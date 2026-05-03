@@ -111,8 +111,8 @@ orchestrate env activate bobenv
 orchestrate env list
 orchestrate --version
 
-# 5. Import tools
-orchestrate tools import --file adk-project/tools/contact_tools.yaml
+# 5. Import tools (Python tools)
+orchestrate tools import --kind python --file adk-project/tools/contact_tools.py
 
 # 6. Verify tools
 orchestrate tools list
