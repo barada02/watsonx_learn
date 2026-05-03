@@ -2,7 +2,8 @@ import os
 from pathlib import Path
 
 from ibm_cloud_sdk_core.authenticators import IAMAuthenticator
-from ibmcloudant.cloudant_v1 import CloudantV1
+from ibm_cloud_sdk_core.api_exception import ApiException
+from ibmcloudant.cloudant_v1 import CloudantV1, Document
 
 
 def load_env_file(env_path: Path) -> None:
@@ -38,7 +39,46 @@ def main() -> None:
     response = service.get_server_information().get_result()
     print("Server Information:")
     print(response)
+    print("-" * 40)
 
+    # 3. Create a Database
+    db_name = "test_database_001"
+    print(f"Creating database '{db_name}'...")
+    try:
+        service.put_database(db=db_name).get_result()
+        print("Success! Database created.")
+    except ApiException as e:
+        if e.code == 412:
+            print("Database already exists. Proceeding...")
+        else:
+            raise e
+
+    # 4. Insert a Document
+    print("\nInserting a document...")
+    doc = Document(
+        id="user_bob",
+        name="Bob",
+        role="Virtual Agent",
+        skills=["Text-to-Speech", "Cloudant", "Speech-to-Text"]
+    )
+    
+    try:
+        response = service.post_document(db=db_name, document=doc).get_result()
+        print(f"Document created! ID: {response['id']}")
+    except ApiException as e:
+        if e.code == 409:
+            print("Document ID 'user_bob' already exists. Skip creation.")
+        else:
+            raise e
+
+    # 5. Read the Document Back
+    print("\nReading document 'user_bob'...")
+    try:
+        doc_read = service.get_document(db=db_name, doc_id="user_bob").get_result()
+        print("Found Document Data:")
+        print(doc_read)
+    except ApiException as e:
+        print(f"Could not read document: {e.message}")
 
 if __name__ == "__main__":
     main()
