@@ -47,14 +47,14 @@ except ApiException as e:
 
 # 3. Create a Document
 doc = Document(
-    id="doc_001",
     name="Bob",
     role="Agent",
     status="Active"
 )
 
-response = service.post_document(
+response = service.put_document(
     db=db_name,
+    doc_id="doc_001",
     document=doc
 ).get_result()
 print(f"Document created with ID: {response['id']}")
@@ -72,4 +72,4 @@ print(f"Retrieved Document: {doc_read}")
 
 - Use `Document` class or standard Python dictionaries for payloads.
 - Status `412` is returned when recreating a DB that already exists; `404` when getting a non-existent doc.
-- By default, documents require an `_id` field. If not provided, Cloudant auto-generates one. In the SDK, use `id` without the underscore to set the document ID.
+- To store a document with a custom ID, use `put_document` (with `doc_id` parameter) rather than `post_document`. `post_document` auto-generates a random UUID `_id`.

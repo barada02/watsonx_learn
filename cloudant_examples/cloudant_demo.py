@@ -56,14 +56,14 @@ def main() -> None:
     # 4. Insert a Document
     print("\nInserting a document...")
     doc = Document(
-        id="user_bob",
         name="Bob",
         role="Virtual Agent",
         skills=["Text-to-Speech", "Cloudant", "Speech-to-Text"]
     )
     
     try:
-        response = service.post_document(db=db_name, document=doc).get_result()
+        # Use put_document to specify the doc_id explicitly
+        response = service.put_document(db=db_name, doc_id="user_bob", document=doc).get_result()
         print(f"Document created! ID: {response['id']}")
     except ApiException as e:
         if e.code == 409:
