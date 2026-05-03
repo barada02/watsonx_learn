@@ -174,12 +174,29 @@ class WatsonxOrchestrate:
         
         data = response.json()
         
-        # Extract response
+        # Extract IDs
         thread_id = data.get("thread_id")
-        status = data.get("status", "completed")
+        run_id = data.get("run_id")
         
-        # Extract message content
+        # If we have a run_id, we need to poll for the result
+        if run_id:
+            print(f"Polling for result (run_id: {run_id})...")
+            final_data = self._poll_run_result(run_id, headers)
+            response_text = self._extract_response_text(final_data)
+            status = final_data.get("status", "completed")
+            
+            print("✓ Response received")
+            
+            return {
+                "status": status,
+                "response": response_text,
+                "thread_id": thread_id,
+                "raw": final_data
+            }
+        
+        # No run_id, try to extract inline response
         response_text = self._extract_response_text(data)
+        status = data.get("status", "completed")
         
         print("✓ Response received")
         
@@ -189,6 +206,46 @@ class WatsonxOrchestrate:
             "thread_id": thread_id,
             "raw": data
         }
+    
+    def _poll_run_result(
+        self,
+        run_id: str,
+        headers: Dict[str, str],
+        timeout_seconds: int = 60,
+        interval_seconds: float = 0.7
+    ) -> Dict[str, Any]:
+        """
+        Poll for the result of a run.
+        
+        Args:
+            run_id: The run ID to poll
+            headers: HTTP headers including authorization
+            timeout_seconds: Maximum time to wait
+            interval_seconds: Time between polls
+            
+        Returns:
+            Dict containing the final result
+        """
+        url = f"{self.instance_url}/v1/orchestrate/runs/{run_id}"
+        start_time = time.time()
+        
+        while True:
+            response = self.session.get(url, headers=headers)
+            response.raise_for_status()
+            data = response.json()
+            
+            status = data.get("status", "").lower()
+            
+            if status in {"completed", "succeeded", "success", "done"}:
+                return data
+            
+            if status in {"failed", "error", "cancelled"}:
+                raise RuntimeError(f"Run failed: {json.dumps(data)}")
+            
+            if time.time() - start_time > timeout_seconds:
+                raise TimeoutError("Polling timed out")
+            
+            time.sleep(interval_seconds)
     
     def _extract_response_text(self, data: Dict[str, Any]) -> str:
         """
