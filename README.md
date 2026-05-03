@@ -2,7 +2,17 @@
 
 This project demonstrates how to build a simple Personal Contact Manager agent using IBM watsonx Orchestrate.
 
-## 📚 Documentation
+## 🎯 Start Here
+
+### For LLMs and Developers
+**[`WATSON_ORCHESTRATE_SKILL.md`](WATSON_ORCHESTRATE_SKILL.md)** - 📖 **COMPREHENSIVE SKILL GUIDE**
+- Complete reference for working with Watson Orchestrate
+- Clear step-by-step instructions
+- Command reference and troubleshooting
+- Best practices and examples
+- Designed for easy LLM understanding
+
+##  Additional Documentation
 
 - **[`setup_env.md`](setup_env.md)** - Step-by-step environment setup commands
 - **[`SETUP_COMPLETE.md`](SETUP_COMPLETE.md)** - Complete setup summary
