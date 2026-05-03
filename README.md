@@ -2,6 +2,13 @@
 
 This project demonstrates how to build a simple Personal Contact Manager agent using IBM watsonx Orchestrate.
 
+## 📚 Documentation
+
+- **[`setup_env.md`](setup_env.md)** - Step-by-step environment setup commands
+- **[`SETUP_COMPLETE.md`](SETUP_COMPLETE.md)** - Complete setup summary
+- **[`adk-project/QUICKSTART.md`](adk-project/QUICKSTART.md)** - Quick start guide
+- **[`adk-project/TOOL_CREATION_GUIDE.md`](adk-project/TOOL_CREATION_GUIDE.md)** - Comprehensive tool creation and troubleshooting guide
+
 ## Project Structure
 
 ```

@@ -35,11 +35,13 @@ orchestrate env activate bobenv
 
 ## Step 3: Import the Tools
 
-Import the contact management tools (Python tools):
+Import the contact management tools (using @tool decorator):
 
 ```bash
-orchestrate tools import --kind python --file adk-project/tools/contact_tools.py
+orchestrate tools import --kind python --file adk-project/tools/contact_tools_decorated.py
 ```
+
+**Note:** This version uses the `@tool` decorator from `ibm_watsonx_orchestrate.agent_builder.tools`, which is the recommended way to create Watson Orchestrate tools.
 
 Verify the tools were imported:
 ```bash

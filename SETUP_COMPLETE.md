@@ -96,8 +96,8 @@ orchestrate env activate bobenv
 Once your environment is activated:
 
 ```bash
-# Import the contact management tools (Python tools)
-orchestrate tools import --kind python --file adk-project/tools/contact_tools.py
+# Import the contact management tools (using @tool decorator)
+orchestrate tools import --kind python --file adk-project/tools/contact_tools_decorated.py
 
 # Verify tools were imported
 orchestrate tools list

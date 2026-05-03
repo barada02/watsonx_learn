@@ -111,8 +111,8 @@ orchestrate env activate bobenv
 orchestrate env list
 orchestrate --version
 
-# 5. Import tools (Python tools)
-orchestrate tools import --kind python --file adk-project/tools/contact_tools.py
+# 5. Import tools (using @tool decorator)
+orchestrate tools import --kind python --file adk-project/tools/contact_tools_decorated.py
 
 # 6. Verify tools
 orchestrate tools list
@@ -141,8 +141,12 @@ orchestrate chat
 ## Next Steps
 
 After successfully adding the environment, proceed to:
-1. Import the tools (Step 4 above)
-2. Import the agent (Step 6 above)
+1. Import the tools (Step 5 above)
+2. Import the agent (Step 7 above)
 3. Start using the Personal Contact Manager!
 
-Refer to [`SETUP_COMPLETE.md`](SETUP_COMPLETE.md) for more details.
+**Important:** If you encounter issues importing tools, refer to [`adk-project/TOOL_CREATION_GUIDE.md`](adk-project/TOOL_CREATION_GUIDE.md) for detailed troubleshooting and alternative methods.
+
+Also see:
+- [`SETUP_COMPLETE.md`](SETUP_COMPLETE.md) - Complete setup summary
+- [`adk-project/QUICKSTART.md`](adk-project/QUICKSTART.md) - Quick start guide
